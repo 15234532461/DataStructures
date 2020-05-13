@@ -109,29 +109,33 @@
 '''
 import random
 from pythonds.basic.queue import Queue
+
 class Printer:
     def __init__(self,ppm):
-        # 设置是打印的速率
+        # 设置打印的速率
         self.pagerate = ppm
         self.currentTask = None
         # 打印机当前任务的剩余时间
         self.timeRemaining = 0
+
     # 内部任务需要的时间计算函数
     def tick(self):
-        if self.currentTask != None:
+        if self.currentTask != None: 
             self.timeRemaining = self.timeRemaining - 1
             if self.timeRemaining <= 0:
                 self.currentTask = None
+    
     # 切换打印机状态
     def is_busy(self):
         if self.currentTask != None:
             return True
         else:
             return False
-    
+
     def startNew(self,newTask):
         self.currentTask = newTask
         self.timeRemaining = newTask.getPages()*60/self.pagerate
+
 
 class Task:
     def __init__(self,time):
@@ -139,12 +143,17 @@ class Task:
         self.pages = random.randrange(1,21)
     
     def getStamp(self):
+        return self.timestamp
+    
+    def getPages(self):
         return self.pages
-
+    
     def waitTime(self,currenttime):
         return currenttime - self.timestamp
 
-def main(numSeconds,pagesPerMinute):
+
+
+def simulation(numSeconds,pagesPerMinute):
     labPrinter = Printer(pagesPerMinute)
     printQueue = Queue()
     watingtimes = []
@@ -153,24 +162,25 @@ def main(numSeconds,pagesPerMinute):
         if newPrintTask():
             task = Task(currentSecond)
             printQueue.enqueue(task)
-        if (not labPrinter.is_busy()) and (not printQueue.isEmpty()):
+        if(not labPrinter.is_busy()) and (not printQueue.isEmpty()):
             nexttask = printQueue.dequeue()
             watingtimes.append(nexttask.waitTime(currentSecond))
             labPrinter.startNew(nexttask)
 
         labPrinter.tick()
-
-        averageWait = sum(watingtimes) / len(watingtimes)
-        print("平均等待%6.2f秒   还剩%3d任务"%(averageWait,printQueue.size()))
-
+    averageWait=sum(watingtimes)/len(watingtimes)
+    print("平均等待时间 %6.2f secs 剩下%3d任务"%(averageWait,printQueue.size()))
 def newPrintTask():
     num = random.randrange(1,181)
     if num == 180:
         return True
     else:
         return False
-main(3600,5)
+
+for i in range(10):
+    simulation(3600,10)
+
 
 '''
-    1.学生
-'''
+    1. 学生数变为20
+    2. 不局限在一个小时之内的话，这些学生都打印完需要多长时间

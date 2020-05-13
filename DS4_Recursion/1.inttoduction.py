@@ -119,4 +119,4 @@ def to_str(num,base):
         result = result + s.pop()
     return result
 
-print(to_str(769,10))
+print(to_str(769,16))

@@ -49,8 +49,9 @@
 
 
 '''
-    leetcode   简单  回文数(回文词)
-    上海自来水来自海上  山西运煤车煤运西山  
+    leetcode  简单第9题   判断一个整数是否是回文数（回文词）
+    回文词：上海自来水来自海上    山西运煤车煤运西山   roor   madam
+    回文数：123321 
 
     编写一个算法来检查放入的字符串是否是回文词 
     -------------------------
@@ -82,3 +83,5 @@ def palChecker(aString):
 
 
 print(palChecker('madam'))
+print(palChecker("lalalalalal"))
+print(palChecker("山西运煤车煤运西山"))
