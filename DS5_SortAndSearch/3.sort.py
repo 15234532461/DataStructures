@@ -10,19 +10,19 @@
 # print(nums)
 
 # 选择排序
-def seletcSort(alist):
-    for fillslot in range(len(nums)-1,0,-1):
-        positionMax = 0
-        for location in range(1,fillslot+1):
-            if nums[location] > nums[positionMax]:
-                positionMax = location
-        temp = nums[fillslot]
-        nums[fillslot] = nums[positionMax]
-        nums[positionMax] = temp
+# def seletcSort(alist):
+#     for fillslot in range(len(nums)-1,0,-1):
+#         positionMax = 0
+#         for location in range(1,fillslot+1):
+#             if nums[location] > nums[positionMax]:
+#                 positionMax = location
+#         temp = nums[fillslot]
+#         nums[fillslot] = nums[positionMax]
+#         nums[positionMax] = temp
 
-nums = [5,2,3,1,0]
-seletcSort(nums)
-print(nums)
+# nums = [5,2,3,1,0]
+# seletcSort(nums)
+# print(nums)
 
 
 '''
@@ -212,3 +212,69 @@ print(alist)
 
 
 '''
+'''
+    五、归并排序（mergeSort）
+        具体做法：递归算法，不断的将列表拆分为一半。
+        如果列表为空或者只有一个元素，那么根据定义，它就被排好了
+
+        alist = [54,26,93,17,77,31,44,55,20]
+
+        第1次拆分：   [54,26,93,17]              [77,31,44,55,20]
+        第2次拆分： [54,26]   [93,17]           [77,31]     [44,55,20]
+        第3次拆分：[54] [26] [93]  [17]        [77]  [31]  [44]  [55,20]
+        第4次拆分                                               [55] [20]
+
+
+归并过程
+        [54]   [26]     [93]  [17]    [77]   [31]   [44] [55]   [20]
+1          [26,54]         [17,93]       [31,77]            [20,55]
+2              [17,26, 54,93]                          [20,44,55]
+
+3                                             [20,31,44,55,77]
+
+4                       [17,20,26,31,44,54,55,77,93]
+
+
+
+
+def mergeSort(alist):
+    if len(alist) > 1:
+        mid = len(alist)//2
+        lefthalf = alist[:mid]
+        righthalf = alist[mid:]
+
+        mergeSort(lefthalf)
+        mergeSort(righthalf)
+
+        i = 0
+        j = 0
+        k = 0
+
+        while i < len(lefthalf) and j < len(righthalf):
+            if lefthalf[i] < righthalf[j]:
+                alist[k] = lefthalf[i]
+                i = i+1
+            else:
+                alist[k] = righthalf[j]
+                j = j+1
+            k = k+1
+
+        while i < len(lefthalf):
+            alist[k] = lefthalf[i]
+            i = i+1
+            k = k+1
+        
+        while j < len(righthalf):
+            alist[k] = righthalf[j]
+            j = j+1
+            k = k+1
+
+        print("归并：",alist)
+
+
+alist = [54,26,93,17,77,31,44,55,20]
+mergeSort(alist)
+print(alist)
+
+'''
+
