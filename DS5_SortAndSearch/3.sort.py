@@ -166,3 +166,49 @@ insertSort(alist)
 print(alist)
 
 '''
+'''
+    四、希尔排序(缩小间隔排序):以插入排序为基础，将原来要排序的列表划分成一些字列表，
+        再对每一个子列表执行插入操作，从而实现对插入排序性能的改进。
+        关键：划分子列表的特定方法
+        alist = [54,26,93,17,77,31,44,55,20]
+    
+        1. 以3为间隔来划分，分成3个字列表
+           [54,17,44]  [17,26,93,44,77,31,54,55,20]
+           [26,77,55]  [17,26,93,44,55,31,54,77,20]
+           [93,31,20]  [17,26,20,44,55,31,54,77,93]
+
+           以1为间隔，也就是进行标准插入排序：[17] [26,20,44,55,31,54,77,93]
+           优化了比对和移动的次数
+
+        2. 以2为间隔来划分，分成5个字列表
+
+
+
+# LeetCode第147题 对链表进行排序
+def shellSort(alist):
+    sublistcount = len(alist)//2
+    while sublistcount > 0:
+        for i in range(sublistcount):
+            gapInsertionSort(alist,i,sublistcount)
+    
+        print("当前子列表为:",sublistcount,"当前整体列表为：",alist)
+        sublistcount = sublistcount//2
+
+# 特定间隔分子列表，然后执行标准插入排序
+def gapInsertionSort(alist,start,gap):
+    for i in range(start+gap,len(alist),gap):
+        currentValue = alist[i]
+        position = i
+
+        while position >= gap and alist[position-gap] > currentValue:
+            alist[position] = alist[position-gap]
+            position = position - gap
+        alist[position] =  currentValue
+
+
+alist = [54,26,93,17,77,31,44,55,20]
+shellSort(alist)
+print(alist)
+
+
+'''
