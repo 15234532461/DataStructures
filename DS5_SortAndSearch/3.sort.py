@@ -94,8 +94,6 @@ print(alist)
 '''
 
 
-
-
 '''
     二、选择排序：每遍历一次列表只交换一次数据，也就是进行一次遍历时找到最大的项
         完成遍历后，再把它换到正确的位置
@@ -129,7 +127,6 @@ seletcSort(alist)
 print(alist)
 
 '''
-
 
 
 '''
@@ -166,6 +163,8 @@ insertSort(alist)
 print(alist)
 
 '''
+
+
 '''
     四、希尔排序(缩小间隔排序):以插入排序为基础，将原来要排序的列表划分成一些字列表，
         再对每一个子列表执行插入操作，从而实现对插入排序性能的改进。
@@ -212,6 +211,8 @@ print(alist)
 
 
 '''
+
+
 '''
     五、归并排序（mergeSort）
         具体做法：递归算法，不断的将列表拆分为一半。
@@ -278,6 +279,8 @@ print(alist)
 
 '''
 
+
+
 '''
     六、快速排序
         选择一个值作为枢纽值，一般就是列表第一项，枢纽值作为帮助拆分的标准，
@@ -310,7 +313,41 @@ print(alist)
         [20,26]
 '''
 def quickSort(alist):
-    pass
+    quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+    if first < last:
+        splitpoint = partition(alist,first,last)
+        quickSortHelper(alist,first,splitpoint-1)
+        quickSortHelper(alist,splitpoint+1,last)
+
+def partition(alist,first,last):
+    pivotvalue = alist[first]
+
+    leftmark  = first + 1
+    rightmark = last
+
+    done = False
+    while not done:
+        while leftmark <= rightmark and alist[leftmark] <= pivotvalue:
+            leftmark = leftmark + 1
+
+        while alist[rightmark] >= pivotvalue and rightmark >= leftmark:
+            rightmark = rightmark - 1
+        
+        if rightmark < leftmark:
+            done = True
+        else:
+            temp = alist[leftmark]
+            alist[leftmark] = alist[rightmark]
+            alist[rightmark] = temp
+    # 找到正确的位置,与枢纽值做交换
+    temp = alist[first]
+    alist[first] = alist[rightmark]
+    alist[rightmark] = temp
+
+    return rightmark
+        
 
 
 alist = [54,26,93,17,77,31,44,55,20]
